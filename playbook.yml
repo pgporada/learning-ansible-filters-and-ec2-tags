@@ -34,7 +34,7 @@
     # consul nodes. Upon starting up my consul cluster, I don't need a
     # server trying to join itself, that would be silly. Therefore, I
     # can remove the instance from the 'start_join' list in consul.
-    # This is simualted by the random and difference filters below.
+    # This is simulated by the random and difference filters below.
     - name: Get rid of a single arbitrary node from the 'new_group' list. This is technically important.
       debug:
         msg: "{{ groups['new_group'] | difference(item) }}"
