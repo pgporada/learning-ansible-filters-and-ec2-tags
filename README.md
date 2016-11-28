@@ -29,6 +29,10 @@ To get our nodes, we make use of the `ec2_remote_facts` module rather than using
 - - - -
 # Usage
 
+Ansible version
+
+        >= 2.2.0.0
+
 Match a set of tags exactly and get the returned instance(s)
 
         ansible-playbook playbook.yml -e cli_env=prod -e cli_roles=app,web,db
