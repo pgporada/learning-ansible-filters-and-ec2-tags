@@ -12,6 +12,8 @@
           "tag:ENV": "{{ cli_env }}"
       register: tagged_instances
 
+    # Instead of using add_host, this could be used with the 'set_fact' module
+    # All depends on how you want to roll. The change is trivial.
     - name: Create new group that matches the filtered tags. This is important.
       add_host:
         hostname: "{{ item }}"
