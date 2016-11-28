@@ -14,7 +14,7 @@ To me, it's really damn difficult to figure out how to bootstrap a cluster of se
 
 
 
-An example of a comma separated tag list would be as follows.
+An example of a comma separated tag list in AWS would be as follows.
 
         ROLES=app,web,db
 
