@@ -17,14 +17,15 @@
         hostname: "{{ item }}"
         groups: "new_group"
       with_items:
-        - "{{ tagged_instances.instances | selectattr('state', 'equalto', 'running') | map(attribute='private_ip_address') | list }}"
+        - "{{ tagged_instances.instances | map(attribute='private_ip_address') | list }}"
+        #- "{{ tagged_instances.instances | selectattr('state', 'equalto', 'running') | map(attribute='private_ip_address') | list }}"
 
     - name: Get instance names of the matching hosts strictly so we can see what the servers 'are'. This is not important.
       debug:
         msg: "{{ item.0 }} - {{ item.1 }}"
       with_together:
-        - "{{ tagged_instances.instances|selectattr('state', 'equalto', 'running')|map(attribute='tags.Name')|list }}"
-        - "{{ tagged_instances.instances|selectattr('state', 'equalto', 'running')|map(attribute='private_ip_address')|list }}"
+        - "{{ tagged_instances.instances | map(attribute='tags.Name') | list }}"
+        - "{{ tagged_instances.instances | map(attribute='private_ip_address') | list }}"
 
     - name: Print name of hosts in the new_group group. This is important.
       debug:
