@@ -43,3 +43,16 @@
         msg: "{{ groups['new_group'] | difference(item) }}"
       with_items:
         - "{{ groups['new_group'] | random }}"
+
+    - name: Inline jinja loop to print out the list of servers
+      debug:
+        msg: |
+          {% for h in groups['new_group'] -%}
+          "{{ h }}"{% if not loop.last -%},{% endif -%}
+          {% endfor -%}
+
+    - name: Template with the jinja loop
+      template:
+        src: config.tmpl.j2
+        dest: ./config.txt
+
