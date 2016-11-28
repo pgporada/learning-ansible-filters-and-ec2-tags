@@ -53,6 +53,7 @@ I hope you can see where this is going.
 1. [Ansible documentation on filters](http://docs.ansible.com/ansible/playbooks_filters.html)
 1. [Imil's blog](https://imil.net/blog/2016/08/05/Ansible_and_AWS_ASG/)
 1. [Bonovoxly's blog](https://bonovoxly.github.io/2016-02-11-ansible-stuffs-ec2_remote_facts_instead_of_ec2_py)
+1. [CodeCentric.de blog](https://blog.codecentric.de/en/2014/08/jinja2-better-ansible-playbooks-templates/)
 
 - - - -
 # Theme Music
