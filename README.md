@@ -33,7 +33,7 @@ Match a set of tags exactly and get the returned instance(s)
 
         ansible-playbook playbook.yml -e cli_env=prod -e cli_roles=app,web,db
 
-Glob all boxes with role of `web` somewhere in the list and get the returned instance(s). This is where this method gets weird and you can potentially match too many boxes. Be careful. Always run with --list-hosts first.
+Glob all boxes with role of `web` somewhere in the list and get the returned instance(s). This is where this method gets weird and you can potentially match too many boxes. **Be careful**. Always run with --list-hosts first.
 
         ansible-playbook playbook.yml -e cli_env=prod -e cli_roles=*web* --list-hosts
         ansible-playbook playbook.yml -e cli_env=prod -e cli_roles=*web*
