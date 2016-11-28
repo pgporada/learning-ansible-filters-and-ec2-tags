@@ -1,4 +1,5 @@
 # Overview: Ansible tagging and filters
+[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 
 Make use of the `ec2_remote_facts` module rather than using the `ec2.py` [dynamic inventory](https://aws.amazon.com/blogs/apn/getting-started-with-ansible-and-dynamic-amazon-ec2-inventory-management/). So far it feels cleaner to use than the full force `ec2.py` and `ec2.ini`. There are some idiosyncrasies when using comma separated tags on AWS.
 
