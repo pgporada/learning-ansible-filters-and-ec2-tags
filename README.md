@@ -1,19 +1,17 @@
 # Overview: Ansible tagging and filters
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 
-To me, it's really damn difficult to figure out how to bootstrap a cluster of servers with Ansible, such as [Consul](https://www.consul.io/). Consul needs at least 3 server nodes to form an HA production cluster. Sure, you can run it just fine with 1 node, but then if it dies you're SOL. Sure, "Just put in the IPs of the boxes you start up.". Well Mr/Ms Smarty Pants, I don't know what those IPs will be when I spin up the servers in AWS so I use tags. I've chosen a possibly stupid way of tagging by using comma separated values, but it works for me. We don't need a consul server joining itself, so we have to remove the current node from the aggregated list of consul servers. This will look as follows.
+To me, it's really damn difficult to figure out how to bootstrap a cluster of servers with Ansible, such as [Consul](https://www.consul.io/). Consul needs at least 3 server nodes to form an HA production cluster. Sure, you can run it just fine with 1 node, but then if it dies you're SOL. Sure, "Just put in the IPs of the boxes you start up.". Well Mr/Ms Smarty Pants, I don't know what those IPs will be when I spin up the servers in AWS so I use tags. I've chosen a possibly stupid way of tagging by using comma separated values, but it works for me. We don't need a consul server joining itself, so we have to remove the current node from the aggregated list of consul servers. This will look as follows in a consul config file.
 
-        Server 1
-            Server 2
-            Server 3
+        10.1.1.1
+            start_join: ["10.1.1.2","10.1.1.3"]
 
-        Server 2
-            Server 1
-            Server 3
+        10.1.1.2
+            start_join: ["10.1.1.1","10.1.1.3"]
 
-        Server 3
-            Server 1
-            Server 2
+        10.1.1.3
+            start_join: ["10.1.1.1","10.1.1.2"]
+
 
 
 An example of a comma separated tag list would be as follows.
