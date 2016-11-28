@@ -33,21 +33,27 @@
       debug:
         var: groups['new_group']
 
+    - name: Get rid of a single arbitrary node from the 'new_group' list. This is not important.
+      debug:
+        msg: "{{ groups['new_group'] | difference(item) }}"
+      with_items:
+        - "{{ groups['new_group'] | random }}"
+
     # This simulates the logic I would use when creating a cluster of
     # consul nodes. Upon starting up my consul cluster, I don't need a
     # server trying to join itself, that would be silly. Therefore, I
     # can remove the instance from the 'start_join' list in consul.
     # This is simulated by the random and difference filters below.
-    - name: Get rid of a single arbitrary node from the 'new_group' list. This is technically important.
-      debug:
-        msg: "{{ groups['new_group'] | difference(item) }}"
+    - name: Set a fact based on the new_group - 1 instance
+      set_fact:
+        consul_servers: "{{ groups['new_group'] | difference(item) }}"
       with_items:
         - "{{ groups['new_group'] | random }}"
 
     - name: Inline jinja loop to print out the list of servers
       debug:
         msg: |
-          {% for h in groups['new_group'] -%}
+          {% for h in consul_servers -%}
           "{{ h }}"{% if not loop.last -%},{% endif -%}
           {% endfor -%}
 
@@ -56,3 +62,6 @@
         src: config.tmpl.j2
         dest: ./config.txt
 
+    - name: Run this in your own shell
+      debug:
+        msg: "cat config.txt"

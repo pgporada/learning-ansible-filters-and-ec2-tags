@@ -1,5 +1,5 @@
 some_key: "myvalue"
-start_join: [{% for h in groups['new_group'] -%}
+start_join: [{% for h in consul_servers -%}
 "{{ h }}"{% if not loop.last -%},{% endif -%}
 {% endfor -%}]
-bootstrap_expect: 1
+bootstrap_expect: {{ consul_servers | length }}
