@@ -1,0 +1,37 @@
+---
+- name: EC2 Tag Searching
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Gather hosts matching tags
+      ec2_remote_facts:
+        filters:
+          instance-state-name: running
+          "tag:ROLES": "{{ cli_roles }}"
+          "tag:ENV": "{{ cli_env }}"
+      register: tagged_instances
+
+    - name: Create new group that matches the filtered tags
+      add_host:
+        hostname: "{{ item }}"
+        groups: "new_group"
+      with_items:
+        - "{{ tagged_instances.instances | selectattr('state', 'equalto', 'running') | map(attribute='private_ip_address') | list }}"
+
+    - name: Get instance names of the matching hosts
+      debug:
+        msg: "{{ item.0 }} - {{ item.1 }}"
+      with_together:
+        - "{{ tagged_instances.instances|selectattr('state', 'equalto', 'running')|map(attribute='tags.Name')|list }}"
+        - "{{ tagged_instances.instances|selectattr('state', 'equalto', 'running')|map(attribute='private_ip_address')|list }}"
+
+    - name: Print name of hosts in the new_group group
+      debug:
+        var: groups['new_group']
+
+    - name: Get rid of arbitrary nodes from the new_group list
+      debug:
+        msg: "{{ groups['new_group'] | difference(item) }}"
+      with_items:
+        - "{{ groups['new_group'] | random }}"
