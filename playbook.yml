@@ -20,7 +20,6 @@
         groups: "new_group"
       with_items:
         - "{{ tagged_instances.instances | map(attribute='private_ip_address') | list }}"
-        #- "{{ tagged_instances.instances | selectattr('state', 'equalto', 'running') | map(attribute='private_ip_address') | list }}"
 
     - name: Get instance names of the matching hosts strictly so we can see what the servers 'are'. This is not important.
       debug:
